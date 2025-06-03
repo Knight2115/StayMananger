@@ -1,0 +1,71 @@
+.combo-box-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .combo-box-display {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #fff;
+  }
+  
+  .combo-box-dropdown {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 20;
+  }
+  
+  .combo-box-search {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    outline: none;
+  }
+  
+  .combo-box-options {
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .combo-box-options li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .combo-box-options li:hover {
+    background-color: #f0f4f8;
+  }
+  
+  .sin-resultados {
+    padding: 10px;
+    color: #888;
+    font-style: italic;
+  }
+
+  .nuevo-cliente-btn {
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  background-color: #f0f0f0;
+  border: none;
+  border-top: 1px solid #ccc;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nuevo-cliente-btn:hover {
+  background-color: #e0e0e0;
+}
+  

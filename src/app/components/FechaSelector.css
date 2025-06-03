@@ -1,0 +1,19 @@
+/* FechaSelector */
+.fecha-input-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.fecha-input-group input[type="date"] {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+}
+.btn-fecha-hoy {
+  background-color: #2563eb;
+  color: #fff;
+}
+.btn-fecha-hoy:hover {
+  background-color: #1e40af;
+}

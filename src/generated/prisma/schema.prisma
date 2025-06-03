@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelos
+
+model Hotel {
+  HotelKey     Int          @id @default(autoincrement())
+  HotelID      Int
+  Nombre       String
+  Cadena       String
+  Ciudad       String
+  Pais         String
+  Estrellas    Int
+  Direccion    String
+  Habitaciones Habitacion[]
+  Reservas     Reservas[]
+}
+
+model Cliente {
+  ClienteKey      Int        @id @default(autoincrement())
+  ClienteID       Int
+  Nombre          String
+  Apellido        String
+  Genero          String
+  FechaNacimiento DateTime
+  Nacionalidad    String
+  TipoCliente     String
+  Reservas        Reservas[]
+}
+
+model TipoHab {
+  TipoHabKey     Int          @id @default(autoincrement())
+  TipoHabID      Int
+  Descripcion    String
+  Categoria      String
+  CapacidadMax   Int
+  TarifaEstandar Decimal
+  Habitaciones   Habitacion[]
+}
+
+model Habitacion {
+  HabitacionKey Int     @id @default(autoincrement())
+  HabitacionID  Int
+  HotelKey      Int
+  TipoHabKey    Int
+  NumeroHab     String
+  Piso          Int
+  Capaciddd     Int
+  Vista         Boolean
+
+  Hotel    Hotel      @relation(fields: [HotelKey], references: [HotelKey])
+  TipoHab  TipoHab    @relation(fields: [TipoHabKey], references: [TipoHabKey])
+  Reservas Reservas[]
+}
+
+model Fecha {
+  FechaKey      Int        @id @default(autoincrement())
+  Fecha         DateTime
+  Año          Int
+  Trimestre     Int
+  Mes           Int
+  Dia           Int
+  DiaSemana     String
+  EsFinDeSemana Boolean
+  Reservas      Reservas[]
+}
+
+model Empleado {
+  EmpleadoKey       Int         @id @default(autoincrement())
+  EmpleadoID        Int
+  Nombre            String
+  Apellido          String
+  Puesto            String
+  Departamento      String
+  FechaContratacion DateTime
+  Reservas          Reservas[]
+  Credencial        Credencial? @relation("EmpleadoCredencial")
+}
+
+model Credencial {
+  CredencialKey Int     @id @default(autoincrement())
+  EmpKey        Int     @unique
+  Usuario       String  @unique
+  PasswordHash  String
+  Rol           String  @default("empleado")
+  Estado        Boolean @default(true)
+
+  Empleado Empleado @relation("EmpleadoCredencial", fields: [EmpKey], references: [EmpleadoKey], onDelete: Cascade)
+}
+
+model CanalReversa {
+  CanalKey    Int        @id @default(autoincrement())
+  CanalID     Int
+  NombreCanal String
+  Descripcion String
+  Reservas    Reservas[]
+}
+
+model Pago {
+  PagoKey  Int        @id @default(autoincrement())
+  PagoID   Int
+  Metodo   String
+  Moneda   String
+  Reservas Reservas[]
+}
+
+model Reservas {
+  ReservaKey        Int     @id @default(autoincrement())
+  HotelKey          Int
+  ClienteKey        Int
+  HabKey            Int
+  FechaKey          Int
+  EmpKey            Int
+  CanalKey          Int
+  PagoKey           Int
+  NochesReservadas  Int
+  CantidadHuespedes Int
+  IngresoHabitacion Decimal
+  IngresoServicios  Decimal
+  DescuentoTotal    Decimal
+  ImpuestoTotal     Decimal
+  LeadTimeReserva   Int
+  IngresoTotal      Decimal
+
+  Hotel        Hotel        @relation(fields: [HotelKey], references: [HotelKey])
+  Cliente      Cliente      @relation(fields: [ClienteKey], references: [ClienteKey])
+  Habitacion   Habitacion   @relation(fields: [HabKey], references: [HabitacionKey])
+  Fecha        Fecha        @relation(fields: [FechaKey], references: [FechaKey])
+  Empleado     Empleado     @relation(fields: [EmpKey], references: [EmpleadoKey])
+  CanalReversa CanalReversa @relation(fields: [CanalKey], references: [CanalKey])
+  Pago         Pago         @relation(fields: [PagoKey], references: [PagoKey])
+}
